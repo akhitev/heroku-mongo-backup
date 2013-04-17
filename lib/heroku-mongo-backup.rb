@@ -203,7 +203,11 @@ module HerokuMongoBackup
       end
     end
 
-    def backup files_number_to_leave=0
+    def backup(files_number_to_leave=0,file_name=nil)
+      if !file_name.nil?
+        @file_name=file_name
+      end
+
       self.chdir    
       self.store
 

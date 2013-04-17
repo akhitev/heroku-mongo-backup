@@ -2,10 +2,12 @@
 
 namespace :mongo do
   desc "Backup prodution database and store it on S3.\n
-        Example of usage: rake mongo:backup OR rake mongo:backup MAX_BACKUPS=7"
+        Example of usage: rake mongo:backup [MAX_BACKUPS=7] [FILE=backup_file.gz]"
   task :backup => :environment do
     if ENV['MAX_BACKUPS']
       HerokuMongoBackup::Backup.new.backup(ENV['MAX_BACKUPS'].to_i)
+    elsif ENV['FILE']
+      HerokuMongoBackup::Backup.new.backup(ENV['FILE'])
     else
       HerokuMongoBackup::Backup.new.backup
     end
